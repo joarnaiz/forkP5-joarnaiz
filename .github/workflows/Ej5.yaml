@@ -1,0 +1,41 @@
+# Source - https://stackoverflow.com/a/76512688
+# Posted by jessehouwing, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-03-15, License - CC BY-SA 4.0
+
+name: Update Early Branch
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  test-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+	
+      - name: Ejecutar Test
+        run: mvn test
+
+      - name: Update Early Branch
+        if: success()
+        run: 
+          git fetch origin
+          git checkout early
+          git pull origin early
+          git merge origin/main
+          git push origin early
+          git push origin early
+
+
