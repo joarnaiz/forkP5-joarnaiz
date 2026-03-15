@@ -24,18 +24,18 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
-		  
+
       - name: Ejecutar Test
         run: mvn test
 
       - name: Update Early Branch
         if: success()
         run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
           git fetch origin
           git checkout early
           git pull origin early
           git merge origin/main
           git push origin early
-          git push origin early
-
 
