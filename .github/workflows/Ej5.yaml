@@ -30,7 +30,7 @@ jobs:
 
       - name: Update Early Branch
         if: success()
-        run: 
+        run: |
           git fetch origin
           git checkout early
           git pull origin early
